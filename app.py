@@ -83,7 +83,7 @@ content = load_content("content.json")
 st.title("_Module_ of :blue[Classification of Health Research]")
 
 # Sidebar
-st.sidebar.title("Generative AI Based Module for Learning Research Methodology")
+st.sidebar.title("Effectiveness of Generative AI Based Module for Andragogy ")
 st.sidebar.write("Enter your details to start:")
 name = st.sidebar.text_input("Name", key="name_input")
 roll_number = st.sidebar.text_input("Roll Number", key="roll_number_input")
