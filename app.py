@@ -80,6 +80,8 @@ if "report_generated" not in st.session_state:
 
 content = load_content("content.json")
 
+st.title("This is a title")
+
 # Sidebar
 st.sidebar.title("Module of Classification of Health Research")
 st.sidebar.title("Generative AI Based Module for Learning Research Methodology")
