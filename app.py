@@ -2,7 +2,6 @@ import streamlit as st
 import json
 from fpdf import FPDF
 from datetime import datetime
-import os
 
 def load_content(file_path):
     with open(file_path, "r") as f:
@@ -76,6 +75,8 @@ if "all_modules_completed" not in st.session_state:
     st.session_state.all_modules_completed = False
 if "start_quiz" not in st.session_state:
     st.session_state.start_quiz = False
+if "report_generated" not in st.session_state:
+    st.session_state.report_generated = False
 
 content = load_content("content.json")
 
@@ -157,20 +158,9 @@ if st.session_state.username and st.session_state.roll_number and st.session_sta
                     st.rerun()
                 else:
                     st.session_state.all_modules_completed = True
-                    # Generate and auto-download PDF
-                    user_data = {
-                        "name": st.session_state.username,
-                        "roll_number": st.session_state.roll_number
-                    }
-                    report_filename = generate_pdf_report(user_data, st.session_state.module_scores)
-                    with open(report_filename, "rb") as f:
-                        st.download_button(
-                            label="Download Full Report",
-                            data=f,
-                            file_name=report_filename,
-                            mime="application/pdf"
-                        )
+                    st.session_state.report_generated = True
                     st.rerun()
+
         else:
             st.warning("Please answer all questions to submit your score.")
 
@@ -191,8 +181,24 @@ if st.session_state.username and st.session_state.roll_number and st.session_sta
     else:
         st.success("🎉 Congratulations! You have completed all modules.")
         st.balloons()
+        
+        # Generate and download report
+        if st.session_state.report_generated:
+            user_data = {
+                "name": st.session_state.username,
+                "roll_number": st.session_state.roll_number
+            }
+            report_filename = generate_pdf_report(user_data, st.session_state.module_scores)
+            with open(report_filename, "rb") as f:
+                st.download_button(
+                    label="Download Full Report",
+                    data=f,
+                    file_name=report_filename,
+                    mime="application/pdf"
+                )
+            st.session_state.report_generated = False  # Prevent regeneration on rerun
 
-# Leaderboard with Module-wise Scores
+# Leaderboard
 st.sidebar.title("Leaderboard")
 if st.sidebar.button("Show Leaderboard"):
     try:
