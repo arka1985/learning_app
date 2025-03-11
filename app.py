@@ -81,7 +81,8 @@ if "report_generated" not in st.session_state:
 content = load_content("content.json")
 
 # Sidebar
-st.sidebar.title("Table of Contents")
+st.sidebar.title("Module of Classification of Health Research")
+st.sidebar.title("Generative AI Based Module for Learning Research Methodology")
 st.sidebar.write("Enter your details to start:")
 name = st.sidebar.text_input("Name", key="name_input")
 roll_number = st.sidebar.text_input("Roll Number", key="roll_number_input")
